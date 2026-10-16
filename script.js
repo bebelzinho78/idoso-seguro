@@ -1,9 +1,19 @@
-let acertosQuizzes = {
-  whatsapp: false,
-  pix: false,
-  banco: false,
-  compras: false
+// Gabarito dos quizzes: a resposta correta fica apenas no JS (não aparece no HTML)
+const RESPOSTAS_QUIZ = {
+  whatsapp: 1, // Ligar no número antigo antes de enviar
+  pix: 2,      // Conferir o extrato no app do banco
+  banco: 0,    // Desligar e ligar para o número do cartão
+  compras: 1   // Prêmio real não cobra taxas
 };
+
+function criarAcertosZerados() {
+  return Object.keys(RESPOSTAS_QUIZ).reduce((acc, chave) => {
+    acc[chave] = false;
+    return acc;
+  }, {});
+}
+
+let acertosQuizzes = criarAcertosZerados();
 
 document.addEventListener('DOMContentLoaded', () => {
   let percentualTamanho = 100;
@@ -68,11 +78,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const progressoSalvo = localStorage.getItem('idosoSeguro_progresso');
   if (progressoSalvo) {
     try {
-      acertosQuizzes = JSON.parse(progressoSalvo);
+      const salvo = JSON.parse(progressoSalvo);
+      // Só aceita chaves conhecidas com valor booleano
+      Object.keys(RESPOSTAS_QUIZ).forEach(chave => {
+        if (salvo && salvo[chave] === true) acertosQuizzes[chave] = true;
+      });
     } catch (e) {
       console.error('Erro ao ler progresso:', e);
     }
   }
+
+  const nomeAluno = document.getElementById('nomeAluno');
+  if (nomeAluno) nomeAluno.addEventListener('input', ocultarErroNome);
 
   atualizarBarraProgresso();
 });
@@ -92,11 +109,12 @@ function mudarAba(idGolpe) {
 }
 
 // LÓGICA DO QUIZ
-function responderQuiz(golpeKey, opcaoIndex, ehCorreta) {
+function responderQuiz(golpeKey, opcaoIndex) {
   const quizCard = document.getElementById(`quiz-${golpeKey}`);
   const resultado = document.getElementById(`resultado-${golpeKey}`);
   if (!quizCard || !resultado) return;
 
+  const ehCorreta = opcaoIndex === RESPOSTAS_QUIZ[golpeKey];
   const botoes = quizCard.querySelectorAll('.opcao-btn');
 
   botoes.forEach((btn, idx) => {
@@ -121,7 +139,7 @@ function responderQuiz(golpeKey, opcaoIndex, ehCorreta) {
 
 // BARRA DE PROGRESSO E CERTIFICADO
 function atualizarBarraProgresso() {
-  const total = 4;
+  const total = Object.keys(acertosQuizzes).length;
   const concluidos = Object.values(acertosQuizzes).filter(Boolean).length;
   const porcentagem = Math.round((concluidos / total) * 100);
 
@@ -139,9 +157,53 @@ function atualizarBarraProgresso() {
   }
 }
 
+// REFAZER OS QUIZZES (limpa o progresso salvo)
+function reiniciarProgresso() {
+  const refazer = document.getElementById('btnRefazerProgresso');
+  const confirmar = window.confirm('Deseja apagar seu progresso e refazer todos os quizzes?');
+  if (!confirmar) return;
+
+  acertosQuizzes = criarAcertosZerados();
+  localStorage.removeItem('idosoSeguro_progresso');
+
+  document.querySelectorAll('.cartao-quiz').forEach(cartao => {
+    cartao.querySelectorAll('.opcao-btn').forEach(btn => {
+      btn.disabled = false;
+      btn.classList.remove('correta', 'incorreta');
+    });
+  });
+
+  document.querySelectorAll('.quiz-resultado').forEach(resultado => {
+    resultado.className = 'quiz-resultado';
+    resultado.textContent = '';
+  });
+
+  const secaoCertificado = document.getElementById('secao-certificado');
+  if (secaoCertificado) secaoCertificado.style.display = 'none';
+
+  const areaCertificado = document.getElementById('areaCertificadoModal');
+  if (areaCertificado) areaCertificado.style.display = 'none';
+
+  const campoNome = document.getElementById('nomeAluno');
+  if (campoNome) campoNome.value = '';
+  ocultarErroNome();
+
+  atualizarBarraProgresso();
+
+  const primeiraAba = document.querySelector('.abas-golpes .aba-btn');
+  if (primeiraAba) mudarAba(primeiraAba.id.replace('tab-', ''));
+  if (refazer) refazer.blur();
+}
+
 // MITO OU VERDADE
 function revelarMito(elemento) {
   elemento.classList.toggle('ativo');
+}
+
+// ERRO DO CAMPO DO NOME (sem usar alert)
+function ocultarErroNome() {
+  const erro = document.getElementById('erroNomeAluno');
+  if (erro) erro.hidden = true;
 }
 
 // GERAR CERTIFICADO
@@ -150,9 +212,13 @@ function gerarCertificado() {
   const nome = nomeInput ? nomeInput.value.trim() : '';
   
   if (!nome) {
-    alert('Por favor, digite seu nome completo para gerar o certificado.');
+    const erro = document.getElementById('erroNomeAluno');
+    if (erro) erro.hidden = false;
+    if (nomeInput) nomeInput.focus();
     return;
   }
+
+  ocultarErroNome();
 
   const certNomeUsuario = document.getElementById('certNomeUsuario');
   const certData = document.getElementById('certData');
@@ -166,16 +232,64 @@ function gerarCertificado() {
   if (areaCertificado) areaCertificado.style.display = 'block';
 }
 
-// MODAL DE EMERGÊNCIA
+// MODAL DE EMERGÊNCIA (fecha com Esc, clique fora e devolve o foco)
+let elementoFocoAnterior = null;
+
 function abrirModalEmergencia() {
   const modal = document.getElementById('modalEmergencia');
-  if (modal) modal.style.display = 'flex';
+  if (!modal) return;
+
+  elementoFocoAnterior = document.activeElement;
+  modal.style.display = 'flex';
+
+  const btnFechar = modal.querySelector('.modal-fechar');
+  if (btnFechar) btnFechar.focus();
 }
 
 function fecharModalEmergencia() {
   const modal = document.getElementById('modalEmergencia');
-  if (modal) modal.style.display = 'none';
+  if (!modal || modal.style.display === 'none') return;
+
+  modal.style.display = 'none';
+
+  if (elementoFocoAnterior && typeof elementoFocoAnterior.focus === 'function') {
+    elementoFocoAnterior.focus();
+  }
+  elementoFocoAnterior = null;
 }
+
+document.addEventListener('keydown', (evento) => {
+  const modal = document.getElementById('modalEmergencia');
+  if (!modal || modal.style.display === 'none') return;
+
+  if (evento.key === 'Escape') {
+    fecharModalEmergencia();
+    return;
+  }
+
+  // Mantém o foco dentro do modal enquanto ele estiver aberto
+  if (evento.key === 'Tab') {
+    const focaveis = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (!focaveis.length) return;
+
+    const primeiro = focaveis[0];
+    const ultimo = focaveis[focaveis.length - 1];
+
+    if (evento.shiftKey && document.activeElement === primeiro) {
+      evento.preventDefault();
+      ultimo.focus();
+    } else if (!evento.shiftKey && document.activeElement === ultimo) {
+      evento.preventDefault();
+      primeiro.focus();
+    }
+  }
+});
+
+// Clique no fundo escuro fecha o modal
+document.addEventListener('click', (evento) => {
+  const modal = document.getElementById('modalEmergencia');
+  if (modal && evento.target === modal) fecharModalEmergencia();
+});
 
 // SIMULADOR PRÁTICO
 function testarSimulador(opcaoSegura) {

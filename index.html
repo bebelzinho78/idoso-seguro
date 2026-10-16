@@ -51,7 +51,10 @@
     <section class="card-progresso">
       <div class="progresso-info">
         <span>🏆 <strong>Seu Nível de Proteção:</strong> <span id="textoProgresso">0 de 4 golpes dominados</span></span>
-        <span id="porcentagemProgresso" class="badge-progresso">0%</span>
+        <span class="progresso-acoes">
+          <span id="porcentagemProgresso" class="badge-progresso">0%</span>
+          <button id="btnRefazerProgresso" class="btn-refazer" onclick="reiniciarProgresso()" title="Apagar o progresso e refazer os quizzes">↺ Refazer</button>
+        </span>
       </div>
       <div class="barra-trilho">
         <div id="barraPreenchimento" class="barra-preenchimento"></div>
@@ -114,13 +117,13 @@
               </div>
 
               <div class="dica-rapida">
-                💡 <strong>Regra de Ouro:</strong> Nunca faça Pix sem antes **LIGAR para o número antigo** da pessoa.
+                💡 <strong>Regra de Ouro:</strong> Nunca faça Pix sem antes <strong>LIGAR para o número antigo</strong> da pessoa.
               </div>
             </article>
 
             <div class="golpe-midia">
               <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Vídeo: Falso Familiar" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/NNac0KIQn8o" title="Vídeo: Golpes no WhatsApp - Serasa Ensina" loading="lazy" allowfullscreen></iframe>
               </div>
 
               <div class="cartao-quiz destacado" id="quiz-whatsapp">
@@ -129,9 +132,9 @@
                   <h4>Seu neto manda mensagem de um número novo pedindo Pix urgente. O que fazer?</h4>
                 </div>
                 <div class="quiz-opcoes">
-                  <button class="opcao-btn" onclick="responderQuiz('whatsapp', 0, false)"><span class="letra">A</span> Fazer o Pix rápido para ajudar.</button>
-                  <button class="opcao-btn" onclick="responderQuiz('whatsapp', 1, true)"><span class="letra">B</span> Ligar no número antigo do neto antes de enviar dinheiro.</button>
-                  <button class="opcao-btn" onclick="responderQuiz('whatsapp', 2, false)"><span class="letra">C</span> Mandar mensagem pedindo foto.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('whatsapp', 0)"><span class="letra">A</span> Fazer o Pix rápido para ajudar.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('whatsapp', 1)"><span class="letra">B</span> Ligar no número antigo do neto antes de enviar dinheiro.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('whatsapp', 2)"><span class="letra">C</span> Mandar mensagem pedindo foto.</button>
                 </div>
                 <div class="quiz-resultado" id="resultado-whatsapp" aria-live="polite"></div>
               </div>
@@ -156,13 +159,13 @@
               </div>
 
               <div class="dica-rapida">
-                💡 <strong>Regra de Ouro:</strong> Abra o **aplicativo do seu banco** e confira o extrato real.
+                💡 <strong>Regra de Ouro:</strong> Abra o <strong>aplicativo do seu banco</strong> e confira o extrato real.
               </div>
             </article>
 
             <div class="golpe-midia">
               <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Vídeo: Falso Pix" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/vkH8fKUxzSU" title="Vídeo: Golpe do Pix com comprovante falso - Record Goiás" loading="lazy" allowfullscreen></iframe>
               </div>
 
               <div class="cartao-quiz destacado" id="quiz-pix">
@@ -171,9 +174,9 @@
                   <h4>Alguém envia print de um Pix feito por engano e pede devolução. Como agir?</h4>
                 </div>
                 <div class="quiz-opcoes">
-                  <button class="opcao-btn" onclick="responderQuiz('pix', 0, false)"><span class="letra">A</span> Devolver imediatamente.</button>
-                  <button class="opcao-btn" onclick="responderQuiz('pix', 1, false)"><span class="letra">B</span> Devolver metade.</button>
-                  <button class="opcao-btn" onclick="responderQuiz('pix', 2, true)"><span class="letra">C</span> Olhar o extrato dentro do aplicativo do seu banco.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('pix', 0)"><span class="letra">A</span> Devolver imediatamente.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('pix', 1)"><span class="letra">B</span> Devolver metade.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('pix', 2)"><span class="letra">C</span> Olhar o extrato dentro do aplicativo do seu banco.</button>
                 </div>
                 <div class="quiz-resultado" id="resultado-pix" aria-live="polite"></div>
               </div>
@@ -198,13 +201,13 @@
               </div>
 
               <div class="dica-rapida">
-                💡 <strong>Regra de Ouro:</strong> **Desligue a ligação.** O banco nunca pede senhas por telefone.
+                💡 <strong>Regra de Ouro:</strong> <strong>Desligue a ligação.</strong> O banco nunca pede senhas por telefone.
               </div>
             </article>
 
             <div class="golpe-midia">
               <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Vídeo: Falsa Central" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/eeu7tmTAi0o" title="Vídeo: Golpe da falsa central do banco" loading="lazy" allowfullscreen></iframe>
               </div>
 
               <div class="cartao-quiz destacado" id="quiz-banco">
@@ -213,9 +216,9 @@
                   <h4>O "banco" liga pedindo sua senha para cancelar uma compra suspeita. O que fazer?</h4>
                 </div>
                 <div class="quiz-opcoes">
-                  <button class="opcao-btn" onclick="responderQuiz('banco', 0, true)"><span class="letra">A</span> Desligar e ligar para o número atrás do seu cartão.</button>
-                  <button class="opcao-btn" onclick="responderQuiz('banco', 1, false)"><span class="letra">B</span> Falar a senha para resolver.</button>
-                  <button class="opcao-btn" onclick="responderQuiz('banco', 2, false)"><span class="letra">C</span> Baixar aplicativo recomendado.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('banco', 0)"><span class="letra">A</span> Desligar e ligar para o número atrás do seu cartão.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('banco', 1)"><span class="letra">B</span> Falar a senha para resolver.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('banco', 2)"><span class="letra">C</span> Baixar aplicativo recomendado.</button>
                 </div>
                 <div class="quiz-resultado" id="resultado-banco" aria-live="polite"></div>
               </div>
@@ -240,13 +243,13 @@
               </div>
 
               <div class="dica-rapida">
-                💡 <strong>Regra de Ouro:</strong> Sorteios de verdade **nunca cobram frete ou taxas**.
+                💡 <strong>Regra de Ouro:</strong> Sorteios de verdade <strong>nunca cobram frete ou taxas</strong>.
               </div>
             </article>
 
             <div class="golpe-midia">
               <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Vídeo: Compras Falsas" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/ZBWk53Qy_b0" title="Vídeo: Golpe de sorteios e prêmios falsos - g1" loading="lazy" allowfullscreen></iframe>
               </div>
 
               <div class="cartao-quiz destacado" id="quiz-compras">
@@ -255,9 +258,9 @@
                   <h4>Anúncio diz que você ganhou uma TV grátis, mas deve pagar R$ 50 de frete no Pix. É seguro?</h4>
                 </div>
                 <div class="quiz-opcoes">
-                  <button class="opcao-btn" onclick="responderQuiz('compras', 0, false)"><span class="letra">A</span> Sim, pagando o frete a TV chega.</button>
-                  <button class="opcao-btn" onclick="responderQuiz('compras', 1, true)"><span class="letra">B</span> Não! Prêmios reais não cobram taxas para entregar.</button>
-                  <button class="opcao-btn" onclick="responderQuiz('compras', 2, false)"><span class="letra">C</span> Sim, se for em boleto.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('compras', 0)"><span class="letra">A</span> Sim, pagando o frete a TV chega.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('compras', 1)"><span class="letra">B</span> Não! Prêmios reais não cobram taxas para entregar.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('compras', 2)"><span class="letra">C</span> Sim, se for em boleto.</button>
                 </div>
                 <div class="quiz-resultado" id="resultado-compras" aria-live="polite"></div>
               </div>
@@ -302,7 +305,8 @@
         
         <div class="certificado-form">
           <label for="nomeAluno"><strong>Digite seu nome completo para o certificado:</strong></label>
-          <input type="text" id="nomeAluno" placeholder="Ex: Maria José da Silva">
+          <input type="text" id="nomeAluno" placeholder="Ex: Maria José da Silva" aria-describedby="erroNomeAluno">
+          <span id="erroNomeAluno" class="erro-campo" role="alert" hidden>⚠️ Por favor, digite seu nome completo para gerar o certificado.</span>
           <button class="botao principal" onclick="gerarCertificado()">📜 Gerar Certificado</button>
         </div>
 
@@ -365,10 +369,10 @@
   </main>
 
   <!-- MODAL DE EMERGÊNCIA MELHORADO (ACOLHIMENTO + DENÚNCIA COMPLETA) -->
-  <div id="modalEmergencia" class="modal-overlay" style="display: none;">
+  <div id="modalEmergencia" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="tituloModalEmergencia" style="display: none;">
     <div class="modal-conteudo">
       <div class="modal-topo">
-        <h2>🚨 CAÍ EM UM GOLPE! O QUE FAZER AGORA?</h2>
+        <h2 id="tituloModalEmergencia">🚨 CAÍ EM UM GOLPE! O QUE FAZER AGORA?</h2>
         <button class="modal-fechar" onclick="fecharModalEmergencia()">✕</button>
       </div>
       <div class="modal-corpo">
