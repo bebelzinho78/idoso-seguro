@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Idoso Seguro | Início</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body id="topo">
+
+  <!-- BARRA DE ACESSIBILIDADE -->
+  <aside class="barra-acessibilidade" aria-label="Ferramentas de Acessibilidade">
+    <div class="acessibilidade-container">
+      <div class="acessibilidade-grupo">
+        <span class="acessibilidade-rotulo">♿ Acessibilidade</span>
+        <div class="divisor-vertical"></div>
+        <div class="botoes-tamanho">
+          <button id="btnDiminuirTexto" class="btn-acessivel" aria-label="Diminuir tamanho do texto" title="Diminuir fonte">A-</button>
+          <button id="btnResetarTexto" class="btn-acessivel btn-destaque" aria-label="Restaurar tamanho padrão" title="Tamanho normal">100%</button>
+          <button id="btnAumentarTexto" class="btn-acessivel" aria-label="Aumentar tamanho do texto" title="Aumentar fonte">A+</button>
+        </div>
+      </div>
+
+      <div class="acessibilidade-grupo">
+        <button id="btnModoEscuro" class="btn-acessivel btn-tema" aria-label="Alternar modo escuro">
+          <span id="iconeTema">🌙</span>
+          <span id="textoTema">Modo Escuro</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CABEÇALHO (Ajustado para navegar internamente sem quebrar CSS) -->
+  <header class="topo-site">
+    <div class="topo-container">
+      <a class="marca" href="#topo">🛡️ Idoso <strong>Seguro</strong></a>
+      <button class="menu-btn" id="menuBtn">☰ Menu</button>
+      <nav id="menu" class="menu">
+        <a class="selecionado" href="#topo">Início</a>
+        <a href="#lista-golpes">Conheça os Golpes</a>
+        <a href="#mito-verdade">Mito ou Verdade</a>
+        <a href="#simulador-pratico">Simulador</a>
+        <button class="btn-emergencia" onclick="abrirModalEmergencia()">🚨 CAÍ EM UM GOLPE!</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- BARRA DE PROGRESSO DO APRENDIZADO (GAMIFICAÇÃO) -->
+    <section class="card-progresso">
+      <div class="progresso-info">
+        <span>🏆 <strong>Seu Nível de Proteção:</strong> <span id="textoProgresso">0 de 4 golpes dominados</span></span>
+        <span id="porcentagemProgresso" class="badge-progresso">0%</span>
+      </div>
+      <div class="barra-trilho">
+        <div id="barraPreenchimento" class="barra-preenchimento"></div>
+      </div>
+    </section>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-conteudo">
+        <span class="etiqueta">INFORMAÇÃO QUE PROTEGE</span>
+        <h1>Use a internet com mais <span>segurança.</span></h1>
+        <p class="hero-descricao">Aprenda a reconhecer golpes digitais, faça os testes práticos e ajude a proteger sua família.</p>
+        <div class="acoes">
+          <a class="botao principal" href="#lista-golpes">Conhecer os Golpes</a>
+          <a class="botao secundario" href="#simulador-pratico">Testar no Simulador</a>
+          <!-- BOTÃO DE COMPARTILHAR NO WHATSAPP -->
+          <a class="botao whatsapp" href="https://api.whatsapp.com/send?text=Ol%C3%A1!%20Encontrei%20este%20guia%20muito%20f%C3%A1cil%20para%20aprender%20a%20evitar%20golpes%20na%20internet:%20Idoso%20Seguro." target="_blank">📲 Compartilhar no WhatsApp</a>
+        </div>
+      </div>
+      <div class="hero-ilustracao">
+        <div class="escudo">🛡️</div>
+        <div class="bolha bolha-um">🔒 Proteja seus dados</div>
+        <div class="bolha bolha-dois">✓ Pare e confira</div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO DE GOLPES COM VÍDEOS E QUIZZES -->
+    <section class="secao" id="lista-golpes">
+      <div class="secao-cabecalho">
+        <span class="etiqueta">GUIA PRÁTICO DE SEGURANÇA</span>
+        <h2>Aprenda a Identificar e Evitar Golpes</h2>
+        <p class="secao-descricao">Escolha uma das abas para entender cada golpe, assistir ao vídeo e responder ao quiz para subir de nível.</p>
+      </div>
+
+      <!-- ABAS -->
+      <div class="abas-golpes" role="tablist">
+        <button class="aba-btn ativa" onclick="mudarAba('whatsapp')" role="tab" id="tab-whatsapp">💬 Falsa Mensagem</button>
+        <button class="aba-btn" onclick="mudarAba('pix')" role="tab" id="tab-pix">💸 Falso Pix</button>
+        <button class="aba-btn" onclick="mudarAba('banco')" role="tab" id="tab-banco">📞 Falsa Central</button>
+        <button class="aba-btn" onclick="mudarAba('compras')" role="tab" id="tab-compras">🛍️ Compras & Prêmios</button>
+      </div>
+
+      <div class="conteudo-golpes">
+
+        <!-- 1. FALSA MENSAGEM -->
+        <div class="painel-golpe ativo" id="golpe-whatsapp" role="tabpanel">
+          <div class="golpe-grid">
+            <article class="golpe-detalhes">
+              <span class="badge-tag">💬 WhatsApp & Telegram</span>
+              <h3>Golpe do Falso Familiar</h3>
+              <p>Criminosos usam a foto de um parente com um número novo, dizendo que o celular quebrou e pedindo Pix urgente para pagar uma conta.</p>
+
+              <div class="sinais-alerta">
+                <h4>🚨 Sinais de Alerta:</h4>
+                <ul>
+                  <li>Pedem urgência para enviar o dinheiro.</li>
+                  <li>A conta informada está em nome de um desconhecido.</li>
+                  <li>Inventam desculpas para não atender ligações de voz ou vídeo.</li>
+                </ul>
+              </div>
+
+              <div class="dica-rapida">
+                💡 <strong>Regra de Ouro:</strong> Nunca faça Pix sem antes **LIGAR para o número antigo** da pessoa.
+              </div>
+            </article>
+
+            <div class="golpe-midia">
+              <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Vídeo: Falso Familiar" allowfullscreen></iframe>
+              </div>
+
+              <div class="cartao-quiz destacado" id="quiz-whatsapp">
+                <div class="quiz-cabecalho">
+                  <span class="quiz-badge">🧠 QUIZ DE FIXAÇÃO</span>
+                  <h4>Seu neto manda mensagem de um número novo pedindo Pix urgente. O que fazer?</h4>
+                </div>
+                <div class="quiz-opcoes">
+                  <button class="opcao-btn" onclick="responderQuiz('whatsapp', 0, false)"><span class="letra">A</span> Fazer o Pix rápido para ajudar.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('whatsapp', 1, true)"><span class="letra">B</span> Ligar no número antigo do neto antes de enviar dinheiro.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('whatsapp', 2, false)"><span class="letra">C</span> Mandar mensagem pedindo foto.</button>
+                </div>
+                <div class="quiz-resultado" id="resultado-whatsapp" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. FALSO PIX -->
+        <div class="painel-golpe" id="golpe-pix" role="tabpanel">
+          <div class="golpe-grid">
+            <article class="golpe-detalhes">
+              <span class="badge-tag">💸 Transferências</span>
+              <h3>Golpe do Falso Pix e Comprovante Editado</h3>
+              <p>Os golpistas enviam comprovantes falsos por foto e pedem devolução de um dinheiro que na verdade nunca entrou na sua conta.</p>
+
+              <div class="sinais-alerta">
+                <h4>🚨 Sinais de Alerta:</h4>
+                <ul>
+                  <li>Comprovantes com cores ou letras desalinhadas.</li>
+                  <li>Comprovante com status "Agendado" em vez de "Concluído".</li>
+                </ul>
+              </div>
+
+              <div class="dica-rapida">
+                💡 <strong>Regra de Ouro:</strong> Abra o **aplicativo do seu banco** e confira o extrato real.
+              </div>
+            </article>
+
+            <div class="golpe-midia">
+              <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Vídeo: Falso Pix" allowfullscreen></iframe>
+              </div>
+
+              <div class="cartao-quiz destacado" id="quiz-pix">
+                <div class="quiz-cabecalho">
+                  <span class="quiz-badge">🧠 QUIZ DE FIXAÇÃO</span>
+                  <h4>Alguém envia print de um Pix feito por engano e pede devolução. Como agir?</h4>
+                </div>
+                <div class="quiz-opcoes">
+                  <button class="opcao-btn" onclick="responderQuiz('pix', 0, false)"><span class="letra">A</span> Devolver imediatamente.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('pix', 1, false)"><span class="letra">B</span> Devolver metade.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('pix', 2, true)"><span class="letra">C</span> Olhar o extrato dentro do aplicativo do seu banco.</button>
+                </div>
+                <div class="quiz-resultado" id="resultado-pix" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. FALSA CENTRAL -->
+        <div class="painel-golpe" id="golpe-banco" role="tabpanel">
+          <div class="golpe-grid">
+            <article class="golpe-detalhes">
+              <span class="badge-tag">📞 Telefone</span>
+              <h3>Golpe da Falsa Central do Banco</h3>
+              <p>Ligação que finge ser do banco avisando sobre compra suspeita, solicitando senha ou Pix de segurança para cancelar o problema.</p>
+
+              <div class="sinais-alerta">
+                <h4>🚨 Sinais de Alerta:</h4>
+                <ul>
+                  <li>Atendente pede para digitar sua senha do cartão.</li>
+                  <li>Pedem para fazer transferência de teste ou segurança.</li>
+                </ul>
+              </div>
+
+              <div class="dica-rapida">
+                💡 <strong>Regra de Ouro:</strong> **Desligue a ligação.** O banco nunca pede senhas por telefone.
+              </div>
+            </article>
+
+            <div class="golpe-midia">
+              <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Vídeo: Falsa Central" allowfullscreen></iframe>
+              </div>
+
+              <div class="cartao-quiz destacado" id="quiz-banco">
+                <div class="quiz-cabecalho">
+                  <span class="quiz-badge">🧠 QUIZ DE FIXAÇÃO</span>
+                  <h4>O "banco" liga pedindo sua senha para cancelar uma compra suspeita. O que fazer?</h4>
+                </div>
+                <div class="quiz-opcoes">
+                  <button class="opcao-btn" onclick="responderQuiz('banco', 0, true)"><span class="letra">A</span> Desligar e ligar para o número atrás do seu cartão.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('banco', 1, false)"><span class="letra">B</span> Falar a senha para resolver.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('banco', 2, false)"><span class="letra">C</span> Baixar aplicativo recomendado.</button>
+                </div>
+                <div class="quiz-resultado" id="resultado-banco" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. COMPRAS E PRÊMIOS -->
+        <div class="painel-golpe" id="golpe-compras" role="tabpanel">
+          <div class="golpe-grid">
+            <article class="golpe-detalhes">
+              <span class="badge-tag">🛍️ Anúncios</span>
+              <h3>Golpe de Compras e Prêmios Falsos</h3>
+              <p>Anúncios com descontos impossíveis ou avisos de prêmios onde exigem que você pague um frete via Pix para receber.</p>
+
+              <div class="sinais-alerta">
+                <h4>🚨 Sinais de Alerta:</h4>
+                <ul>
+                  <li>Preços absurdamente baixos.</li>
+                  <li>Cobrança de taxas para liberar prêmios "gratuitos".</li>
+                </ul>
+              </div>
+
+              <div class="dica-rapida">
+                💡 <strong>Regra de Ouro:</strong> Sorteios de verdade **nunca cobram frete ou taxas**.
+              </div>
+            </article>
+
+            <div class="golpe-midia">
+              <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Vídeo: Compras Falsas" allowfullscreen></iframe>
+              </div>
+
+              <div class="cartao-quiz destacado" id="quiz-compras">
+                <div class="quiz-cabecalho">
+                  <span class="quiz-badge">🧠 QUIZ DE FIXAÇÃO</span>
+                  <h4>Anúncio diz que você ganhou uma TV grátis, mas deve pagar R$ 50 de frete no Pix. É seguro?</h4>
+                </div>
+                <div class="quiz-opcoes">
+                  <button class="opcao-btn" onclick="responderQuiz('compras', 0, false)"><span class="letra">A</span> Sim, pagando o frete a TV chega.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('compras', 1, true)"><span class="letra">B</span> Não! Prêmios reais não cobram taxas para entregar.</button>
+                  <button class="opcao-btn" onclick="responderQuiz('compras', 2, false)"><span class="letra">C</span> Sim, se for em boleto.</button>
+                </div>
+                <div class="quiz-resultado" id="resultado-compras" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SEÇÃO MITO OU VERDADE -->
+    <section class="secao" id="mito-verdade">
+      <div class="secao-cabecalho">
+        <span class="etiqueta">TESTE SEU CONHECIMENTO</span>
+        <h2>Mito ou Verdade sobre Golpes Digitais</h2>
+        <p class="secao-descricao">Clique nas perguntas abaixo para descobrir o que é fato e o que é farsa na internet.</p>
+      </div>
+
+      <div class="grid-mitos">
+        <div class="cartao-mito" onclick="revelarMito(this)">
+          <div class="mito-pergunta">❓ "O banco liga para confirmar senhas em caso de fraude?"</div>
+          <div class="mito-resposta">❌ <strong>MITO!</strong> Os bancos nunca pedem senhas, tokens ou códigos por telefone. Se pedirem, desligue!</div>
+        </div>
+
+        <div class="cartao-mito" onclick="revelarMito(this)">
+          <div class="mito-pergunta">❓ "Chave Pix de telefone ou CPF revela meus dados?"</div>
+          <div class="mito-resposta">✔️ <strong>VERDADE!</strong> Dar o CPF mostra seu nome completo. Para maior privacidade com desconhecidos, use a <strong>Chave Aleatória</strong>.</div>
+        </div>
+
+        <div class="cartao-mito" onclick="revelarMito(this)">
+          <div class="mito-pergunta">❓ "Sorteios reais cobram taxa de frete para entregar o prêmio?"</div>
+          <div class="mito-resposta">❌ <strong>MITO!</strong> Se exigirem qualquer pagamento via Pix para enviar um prêmio, trata-se de um golpe.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO DO CERTIFICADO DIGITAL -->
+    <section class="secao" id="secao-certificado" style="display: none;">
+      <div class="card-certificado">
+        <h2>🎉 PARABÉNS! VOCÊ COMPLETOU O TREINAMENTO!</h2>
+        <p>Você respondeu corretamente a todos os quizzes de segurança e está mais preparado contra fraudes digitais.</p>
+        
+        <div class="certificado-form">
+          <label for="nomeAluno"><strong>Digite seu nome completo para o certificado:</strong></label>
+          <input type="text" id="nomeAluno" placeholder="Ex: Maria José da Silva">
+          <button class="botao principal" onclick="gerarCertificado()">📜 Gerar Certificado</button>
+        </div>
+
+        <div id="areaCertificadoModal" class="certificado-papel" style="display: none;">
+          <div class="certificado-borda">
+            <span class="cert-icone">🛡️</span>
+            <h1>CERTIFICADO DE CONCLUSÃO</h1>
+            <p>Certificamos que</p>
+            <h2 id="certNomeUsuario">[Nome do Usuário]</h2>
+            <p>concluiu com êxito o treinamento educativo de prevenção a golpes digitais no projeto <strong>Idoso Seguro</strong>.</p>
+            <div class="cert-rodape">
+              <span id="certData">Data: --/--/----</span>
+              <span>Selo de Proteção Digital ✓</span>
+            </div>
+          </div>
+          <button class="botao secundario btn-imprimir" onclick="window.print()">🖨️ Imprimir ou Salvar PDF</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO DO SIMULADOR PRÁTICO -->
+    <section class="secao" id="simulador-pratico">
+      <div class="secao-cabecalho">
+        <span class="etiqueta">TREINAMENTO PRÁTICO</span>
+        <h2>Simulador de Mensagens Suspeitas</h2>
+        <p class="secao-descricao">Veja a simulação abaixo e escolha a melhor atitude:</p>
+      </div>
+
+      <div class="simulador-container">
+        <div class="celular-mockup">
+          <div class="celular-topo">
+            <span class="contato-foto">👤</span>
+            <div class="contato-info">
+              <strong>Lucas (Filho) - Número Novo</strong>
+              <small>Online agora</small>
+            </div>
+          </div>
+
+          <div class="celular-chat">
+            <div class="balao-mensagem">
+              <p>Oi mãe! Troquei de número, salva aí. Tive um problema no banco e preciso pagar uma conta de R$ 450,00 urgente agora. Consegue me fazer um Pix?</p>
+              <span class="hora-msg">14:32</span>
+            </div>
+          </div>
+
+          <div class="simulador-acoes">
+            <p><strong>O que você faria nesta situação?</strong></p>
+            <button class="btn-simulacao btn-perigo" onclick="testarSimulador(false)">
+              💸 Fazer o Pix de R$ 450,00 imediatamente
+            </button>
+            <button class="btn-simulacao btn-sucesso" onclick="testarSimulador(true)">
+              📞 Ligar no número antigo do filho para confirmar
+            </button>
+          </div>
+
+          <div id="simuladorFeedback" class="simulador-feedback" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL DE EMERGÊNCIA MELHORADO (ACOLHIMENTO + DENÚNCIA COMPLETA) -->
+  <div id="modalEmergencia" class="modal-overlay" style="display: none;">
+    <div class="modal-conteudo">
+      <div class="modal-topo">
+        <h2>🚨 CAÍ EM UM GOLPE! O QUE FAZER AGORA?</h2>
+        <button class="modal-fechar" onclick="fecharModalEmergencia()">✕</button>
+      </div>
+      <div class="modal-corpo">
+        
+        <!-- MENSAGEM ACOLHEDORA DE APOIO EMOCIONAL -->
+        <div class="mensagem-acolhimento">
+          <h3>💙 Mantenha a calma. A culpa NÃO é sua!</h3>
+          <p>Esses criminosos usam técnicas muito elaboradas para enganar as pessoas. Respire fundo e siga estes passos rápidos agora mesmo para proteger seu dinheiro e seus dados:</p>
+        </div>
+
+        <div class="passos-emergencia">
+          <div class="passo-item">
+            <span class="passo-numero">1</span>
+            <div>
+              <strong>Ligue IMEDIATAMENTE para o seu Banco</strong>
+              <p>Solicite o bloqueio temporário das senhas e peça o acionamento do <strong>MED (Mecanismo Especial de Devolução do Pix)</strong> para tentar reaver o valor.</p>
+            </div>
+          </div>
+
+          <div class="passo-item">
+            <span class="passo-numero">2</span>
+            <div>
+              <strong>Registre um Boletim de Ocorrência (B.O.)</strong>
+              <p>Você pode fazer o B.O. pela internet na <strong>Delegacia Virtual da Polícia Civil</strong> do seu Estado ou ir à delegacia mais próxima. Leve o comprovante e as conversas impressas/salvas.</p>
+            </div>
+          </div>
+
+          <div class="passo-item">
+            <span class="passo-numero">3</span>
+            <div>
+              <strong>Denuncie o Golpista nos Canais Oficiais</strong>
+              <ul class="lista-denuncia">
+                <li><strong>No WhatsApp:</strong> Toque no nome do contato > Role até o final > Selecione <em>"Denunciar e Bloquear"</em>.</li>
+                <li><strong>Chave Pix:</strong> Informe a chave do golpista ao seu banco para que a conta dele seja marcada como fraudulenta no Banco Central.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="passo-item">
+            <span class="passo-numero">4</span>
+            <div>
+              <strong>Altere suas Senhas e Avise Familiares</strong>
+              <p>Troque as senhas do seu e-mail e aplicativo bancário. Mande uma mensagem para seus parentes avisando que golpistas podem tentar se passar por você.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-rodape">
+        <button class="botao principal" onclick="fecharModalEmergencia()">Entendi, vou seguir os passos</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="rodape">
+    <p><strong>Idoso Seguro</strong> — Guia educativo e comunitário de prevenção contra golpes digitais.</p>
+  </footer>
+
+</body>
+</html>
